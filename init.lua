@@ -265,25 +265,51 @@ require('lazy').setup({
       vim.cmd.colorscheme 'catppuccin-mocha'
     end,
   },
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+  {
+    "kawre/leetcode.nvim",
+    -- auto-update the HTML parser if nvim-treesitter is installe
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      -- picker of your choice (already have telescope)
+      "nvim-telescope/telescope.nvim",
+    },
+    opts = {
+      ---------------------------------
+      -- ✨  core settings
+      ---------------------------------
+      lang = "python3",             -- default language (change to "python3", "rust", …)
+      cache = {                 -- re-fetch problem list once a week
+        update_interval = 60*60*24*7,
+      },
+      description = {           -- put problem statement on the left
+        position = "left",
+        width    = "40%",
+      },
+      picker = { provider = "telescope" },  -- use the familiar ⌘-T finder
+      plugins = {
+        non_standalone = false, -- set true if you’ll *always* run :Leet inside a normal session
+      },
+      -- uncomment if you use leetcode.cn
+      -- cn = { enabled = true, translator = true, translate_problems = true },
+    },
+  },
+  {
+    'xeluxee/competitest.nvim',          -- ← the plugin itself
+    cmd = {                              -- lazy-load on any CompetiTest command
+      'CompetiTest', 'CompetiTestAdd',
+      'CompetiTestRun', 'CompetiTestReceive',
+    },
+    dependencies = 'MunifTanjim/nui.nvim',  -- popup UI helper
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
+      require('competitest').setup {
+        -- pick a port that’s free; stick with 27121 unless you need to change it
+        companion_port = 27121,
+        -- optional convenience so the socket stays up between restarts
+        start_receiving_persistently_on_setup = true,
+        -- put any custom compile/run flags here later
+        -- compile_command = { cpp = { exec = 'g++', args = { '$(FNAME)', '-std=c++20', '-O2', '-pipe', '-static', '-o', '$(FNOEXT)' } } },
       }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
   -- NOTE: Plugins can also be added by using a table,
