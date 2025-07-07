@@ -253,7 +253,24 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
   'ThePrimeagen/vim-be-good',
-
+  {
+    'christoomey/vim-tmux-navigator',
+    cmd = {
+      'TmuxNavigateLeft',
+      'TmuxNavigateDown',
+      'TmuxNavigateUp',
+      'TmuxNavigateRight',
+      'TmuxNavigatePrevious',
+      'TmuxNavigatorProcessList',
+    },
+    keys = {
+      { '<c-h>', '<cmd><C-U>TmuxNavigateLeft<cr>' },
+      { '<c-j>', '<cmd><C-U>TmuxNavigateDown<cr>' },
+      { '<c-k>', '<cmd><C-U>TmuxNavigateUp<cr>' },
+      { '<c-l>', '<cmd><C-U>TmuxNavigateRight<cr>' },
+      { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
+    },
+  },
   {
     'catppuccin/nvim',
     name = 'catppuccin',
@@ -266,27 +283,27 @@ require('lazy').setup({
     end,
   },
   {
-    "kawre/leetcode.nvim",
+    'kawre/leetcode.nvim',
     -- auto-update the HTML parser if nvim-treesitter is installe
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
       -- picker of your choice (already have telescope)
-      "nvim-telescope/telescope.nvim",
+      'nvim-telescope/telescope.nvim',
     },
     opts = {
       ---------------------------------
       -- ✨  core settings
       ---------------------------------
-      lang = "python3",             -- default language (change to "python3", "rust", …)
-      cache = {                 -- re-fetch problem list once a week
-        update_interval = 60*60*24*7,
+      lang = 'python3', -- default language (change to "python3", "rust", …)
+      cache = { -- re-fetch problem list once a week
+        update_interval = 60 * 60 * 24 * 7,
       },
-      description = {           -- put problem statement on the left
-        position = "left",
-        width    = "40%",
+      description = { -- put problem statement on the left
+        position = 'left',
+        width = '40%',
       },
-      picker = { provider = "telescope" },  -- use the familiar ⌘-T finder
+      picker = { provider = 'telescope' }, -- use the familiar ⌘-T finder
       plugins = {
         non_standalone = false, -- set true if you’ll *always* run :Leet inside a normal session
       },
@@ -295,12 +312,14 @@ require('lazy').setup({
     },
   },
   {
-    'xeluxee/competitest.nvim',          -- ← the plugin itself
-    cmd = {                              -- lazy-load on any CompetiTest command
-      'CompetiTest', 'CompetiTestAdd',
-      'CompetiTestRun', 'CompetiTestReceive',
+    'xeluxee/competitest.nvim', -- ← the plugin itself
+    cmd = { -- lazy-load on any CompetiTest command
+      'CompetiTest',
+      'CompetiTestAdd',
+      'CompetiTestRun',
+      'CompetiTestReceive',
     },
-    dependencies = 'MunifTanjim/nui.nvim',  -- popup UI helper
+    dependencies = 'MunifTanjim/nui.nvim', -- popup UI helper
     config = function()
       require('competitest').setup {
         -- pick a port that’s free; stick with 27121 unless you need to change it
@@ -736,7 +755,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {},
+        basedpyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
