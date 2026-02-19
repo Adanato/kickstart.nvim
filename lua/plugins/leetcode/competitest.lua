@@ -19,12 +19,12 @@ return {
             '-std=c++17', -- or -std=c++20
             '-O2',
             '-pipe',
-            '$(FNAME)', -- e.g. “Broken Necklace.cpp”
+            '$(FNAME)', -- e.g. "Broken Necklace.cpp"
             '-o',
-            '$(FNOEXT)', -- e.g. “Broken Necklace”
+            '$(FNOEXT)', -- e.g. "Broken Necklace"
           },
         },
-        -- For Python you usually don’t need a compile step.
+        -- For Python you usually don't need a compile step.
         -- Remove or leave empty to skip; or enable syntax check:
         python = {
           exec = 'python3',
@@ -40,7 +40,7 @@ return {
         },
         python = {
           exec = 'python3',
-          args = { '$(FNAME)' }, -- simple “python3 script.py”
+          args = { '$(FNAME)' }, -- simple "python3 script.py"
           -- if you want file-based inputs instead, use:
           -- args = { '$(FNAME)', '<', '$(FNOEXT)_input$(TCNUM).txt' },
         },

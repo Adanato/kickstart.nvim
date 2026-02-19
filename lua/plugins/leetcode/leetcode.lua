@@ -21,7 +21,7 @@ return {
     },
     picker = { provider = 'telescope' }, -- use the familiar ⌘-T finder
     plugins = {
-      non_standalone = false, -- set true if you’ll *always* run :Leet inside a normal session
+      non_standalone = false, -- set true if you'll *always* run :Leet inside a normal session
     },
     -- uncomment if you use leetcode.cn
     -- cn = { enabled = true, translator = true, translate_problems = true },

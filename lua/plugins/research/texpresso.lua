@@ -15,7 +15,7 @@ return {
     end, { desc = 'TeXpresso preview' })
 
     -- Most common cause of black window: wrong working directory.
-    -- This makes TeXpresso run from the current file’s folder.
+    -- This makes TeXpresso run from the current file's folder.
     vim.api.nvim_create_autocmd('FileType', {
       pattern = 'tex',
       callback = function()

@@ -14,5 +14,10 @@ return {
     { '<c-k>', '<cmd><C-U>TmuxNavigateUp<cr>' },
     { '<c-l>', '<cmd><C-U>TmuxNavigateRight<cr>' },
     { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
+    -- Terminal mode: jump out of terminal without Esc first
+    { '<c-h>', '<C-\\><C-n><cmd>TmuxNavigateLeft<cr>', mode = 't' },
+    { '<c-j>', '<C-\\><C-n><cmd>TmuxNavigateDown<cr>', mode = 't' },
+    { '<c-k>', '<C-\\><C-n><cmd>TmuxNavigateUp<cr>', mode = 't' },
+    { '<c-l>', '<C-\\><C-n><cmd>TmuxNavigateRight<cr>', mode = 't' },
   },
 }

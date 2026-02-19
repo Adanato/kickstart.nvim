@@ -1,7 +1,7 @@
 -- lua/plugins/vimtex.lua
 return {
   'lervag/vimtex',
-  lazy = false, -- don't lazy-load: inverse search needs :VimtexInverseSearch available
+  ft = 'tex', -- only load for LaTeX files
   init = function()
     ------------------------------------------------------------------
     -- General

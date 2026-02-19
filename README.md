@@ -150,6 +150,59 @@ examples of adding popularly requested plugins.
     * [Restructure the configuration](https://github.com/nvim-lua/kickstart.nvim/issues/218)
     * [Reorganize init.lua into a multi-file setup](https://github.com/nvim-lua/kickstart.nvim/pull/473)
 
+### Performance Optimizations
+
+The following optimizations have been applied on top of the base kickstart config:
+
+#### Startup & Core
+
+| Change | File | Why |
+|--------|------|-----|
+| `vim.g.have_nerd_font = true` | `init.lua` | FiraCode Nerd Font Mono is set in kitty.conf |
+| Disable python3/ruby/perl/node providers | `init.lua` | Saves ~5-10ms each; modern plugins are pure Lua |
+| `syntax manual` + `synmaxcol = 500` | `init.lua` | Prevents legacy regex highlighter from running alongside treesitter; stops highlighting after column 500 on minified files |
+| `updatetime = 400` (from 250) | `init.lua` | Reduces LSP `CursorHold` document highlight frequency |
+
+#### Plugin-Level
+
+| Change | File | Why |
+|--------|------|-----|
+| blink.cmp: `fuzzy = 'prefer_rust_with_warning'` | `blink.lua` | Rust fuzzy matcher is significantly faster than Lua |
+| blink.cmp: `event = InsertEnter + CmdlineEnter` | `blink.lua` | Was `VimEnter` — no need for completion at startup |
+| which-key: `delay = 200` (from 0) | `which_key.lua` | Instant popup on every leader press caused micro-stutters |
+| Telescope: `cmd + keys` lazy loading | `telescope.lua` | Was `event = VimEnter` — now only loads when you search |
+| Telescope: `file_ignore_patterns` | `telescope.lua` | Skips node_modules, .git, \_\_pycache\_\_, .venv, .egg-info |
+| Treesitter: `additional_vim_regex_highlighting = false` | `nvim_treesitter.lua` | Running both treesitter and regex highlighting doubles the work |
+| Snacks: `bigfile = { enabled = true }` | `snacks.lua` | Auto-disables treesitter/LSP on large files |
+| vimtex: `ft = 'tex'` (from `lazy = false`) | `research/vimtex.lua` | Only loads for LaTeX files, not every startup |
+| Inlay hints disabled in insert mode | `nvim_lspconfig.lua` | They fire on every keystroke — can block editor if LSP is slow |
+
+#### Removed Plugins
+
+| Plugin | Reason |
+|--------|--------|
+| smear-cursor.nvim | Kitty handles cursor rendering natively |
+| codecompanion.nvim | Replaced by Claude Code (claudecode.nvim) |
+
+#### Plugin Partitions
+
+Plugins are organized into groups via lazy.nvim imports:
+
+```lua
+require('lazy').setup({
+  { import = 'plugins' },           -- core (always loaded)
+  { import = 'plugins.leetcode' },  -- competitive programming
+  { import = 'plugins.research' },  -- LaTeX, Obsidian notes
+}, { ... })
+```
+
+Comment out an import line to disable an entire group.
+
+#### Profiling
+
+- `:Lazy profile` — plugin startup times and load order
+- `nvim --startuptime /tmp/startup.log` — full startup breakdown
+
 ### Install Recipes
 
 Below you can find OS specific install instructions for Neovim and dependencies.
