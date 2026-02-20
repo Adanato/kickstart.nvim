@@ -84,7 +84,29 @@ return {
     local capabilities = require('blink.cmp').get_lsp_capabilities()
 
     local servers = {
-      basedpyright = {},
+      basedpyright = {
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = 'basic',
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = 'openFilesOnly',
+            },
+          },
+        },
+      },
+      ruff = {
+        -- Disable hover in favor of basedpyright
+        on_attach = function(client, _)
+          client.server_capabilities.hoverProvider = false
+        end,
+        init_options = {
+          settings = {
+            lineLength = 100,
+          },
+        },
+      },
       lua_ls = {
         settings = {
           Lua = {

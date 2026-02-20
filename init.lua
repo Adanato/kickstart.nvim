@@ -58,6 +58,20 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+-- Diagnostic navigation
+vim.keymap.set('n', ']e', function()
+  vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+end, { desc = 'Next [E]rror' })
+vim.keymap.set('n', '[e', function()
+  vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+end, { desc = 'Prev [E]rror' })
+vim.keymap.set('n', ']w', function()
+  vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
+end, { desc = 'Next [W]arning' })
+vim.keymap.set('n', '[w', function()
+  vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
+end, { desc = 'Prev [W]arning' })
+
 -- NOTE: <C-hjkl> window nav is handled by vim-tmux-navigator plugin
 
 -- [[ Autocommands ]]
